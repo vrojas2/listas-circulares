@@ -1,39 +1,36 @@
 export default class Base {
-    constructor(objBase) {
-        this._nombre = objBase.nombre;
-        this._minutos = objBase.minutos;
+    constructor(base) {
+        this._nombre = base.nombre;
+        this._minutos = base.minutos;
         this._siguiente = null;
         this._anterior = null;
     }
+
     get nombre() {
         return this._nombre;
-    }
-
-    set nombre(newNombre) {
-        this._nombre = newNombre;
     }
 
     get minutos() {
         return this._minutos;
     }
 
-    set minutos(newMinutos) {
-        this._minutos = newMinutos;
-    }
-
     get siguiente() {
         return this._siguiente;
     }
 
-    set siguiente(newSiguiente) {
-        this._siguiente = newSiguiente;
+    set siguiente(valor) {
+        this._siguiente = valor;
     }
-    
-    get anterior() {
+
+    get anterior(){
         return this._anterior;
     }
-    
-    set anterior(newAnterior) {
-        this._anterior = newAnterior;
+
+    set anterior(valor) {
+        this._anterior = valor;
+    }
+
+    toString() {
+        return `Nombre: ${this._nombre}, Minutos: ${this._minutos}`;
     }
 }
