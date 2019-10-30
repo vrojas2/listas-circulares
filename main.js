@@ -4,12 +4,11 @@ import Base from "./base.js";
 let btnAgregar = document.querySelector("#btn"),
     btnBorrar = document.querySelector("#btnBorrar"),
     btnBuscar = document.querySelector("#btnBuscar"),
-    divBase = document.querySelector("#inventario");
+    divBase = document.querySelector("#inventario"),
+    divConsulta = document.querySelector("#consulta");
 
 btnAgregar.addEventListener("click", () => {
-    m.agregarBaseNuevo(m.infoInputs());
-    //console.log(m._inventarioTotal);
-
+    m.agregarBaseNuevo();
 });
 
 btnBorrar.addEventListener("click", () => {
@@ -17,14 +16,14 @@ btnBorrar.addEventListener("click", () => {
 });
 
 btnBuscar.addEventListener("click", () => {
-
+    m.hacerConsulta();
 });
 
 class Main {
     constructor() {
         this._rutaTotal = new Ruta();
-
     }
+    
     infoInputs() {
         let nuevoBase = {
             nombre: document.querySelector("#nombre").value,
@@ -37,12 +36,17 @@ class Main {
     agregarBaseNuevo() {
         let objNuevoBase = this.infoInputs();
         this._rutaTotal.agregarProducto(objNuevoBase);
-        this.mostrarInventario();
+        this.mostrarBases();
     }
 
-    mostrarInventario() {
+    mostrarBases() {
         this._rutaTotal.imprimir();
         divBase.innerHTML = this._rutaTotal.baseString;
+    }
+
+    hacerConsulta() {
+        nombre = document.querySelector("#buscar").value;
+        divConsulta.innerHTML = this._rutaTotal.buscarConsulta(nombre);
     }
 
 }
