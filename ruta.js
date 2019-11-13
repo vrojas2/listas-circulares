@@ -139,6 +139,82 @@ export default class Ruta {
         } while (inicio != this._inicio);
     }
 
+    ejecutarRuta(nombre, iH, fH) {
+        if (this._inicio != null) {
+            let inicioBase = null;
+            if (this._inicio.nombre == nombre) {
+                inicioBase = this._inicio;
+            } else {
+                inicioBase = this.buscarBasesRegistradas(nombre, this._inicio.siguiente);
+            }
+
+            if (inicioBase != null) {
+                this.hacerRuta(inicioBase, iH, fH);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    hacerRuta(base, iH, fH) {
+        this._rutaString = "";
+        iH = this.convertirAMilisegundos(iH);
+        fH = this.convertirAMilisegundos(fH);
+        if (iH < fH) {
+            this._rutaString += `Hora actual: ${this.convertirAHoras(iH)}. Base actual: ${base.nombre}` + "<br>";
+            base = base.siguiente;
+            do {
+                let agregarMin = this.converMinAMilisegundos(base.mins);
+                iH += agregarMin;
+                this._rutaString += `Hora actual: ${this.convertirAHoras(iH)}. Base actual: ${base.nombre}` + "<br>";
+                base = base.siguiente;
+            } while (iH < fH);
+        } else {
+            let contador = 0,
+                horaLimite = this.convertirAMilisegundos("23:59");
+
+            this._rutaString += `Hora actual: ${this.convertirAHoras(iH)}. Base actual: ${base.nombre}` + "<br>";
+            base = base.siguiente;
+            do {
+                let agregarMin = this.converMinAMilisegundos(base.mins);
+                iH += agregarMin;
+                if (iH > horaLimite) {
+                    iH -= (horaLimite + 60000);
+                    contador++;
+                }
+                this._rutaString += `Hora actual: ${this.convertirAHoras(iH)}. Base actual: ${base.nombre}` + "<br>";
+                base = base.siguiente;
+            } while ((iH < fH) || (contador == 0));
+        }
+    }
+
+    convertirAMilisegundos(hora) {
+        hora = hora.split(":");
+        let hora = hora[0];
+        let mins = hora[1];
+        let miliseg = (horas * 3600000) + (mins * 60000);
+        return miliseg;
+    }
+
+    converMinAMilisegundos(mins) {
+        let miliseg = mins * 60000;
+        return miliseg;
+    }
+
+    convertirAHoras(miliseg) {
+        let mins = parseInt((miliseg / (1000 * 60))) % 60;
+        let horas = parseInt((miliseg / (1000 * 60 * 60))) % 24;
+        if (horas < 10) {
+            horas = "0" + horas;
+        }
+        if (mins < 10) {
+            mins = "0" + mins;
+        }
+        return horas + ":" + mins;
+    }
+
 }
 
 let r = new Ruta();

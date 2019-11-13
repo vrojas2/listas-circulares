@@ -28,6 +28,12 @@ bttnInsertar.addEventListener("click", () => {
     m.insertarBase(posicion);
 });
 
+bttnInicio.addEventListener("click", () => {
+    m.inicioRuta(document.querySelector("#inicioBase").value,
+    document.querySelector("#inicioHora").value,
+    document.querySelector("#finalHora").value);
+});
+
 class Main {
     constructor() {
         this._rutaTotal = new Ruta();
@@ -73,6 +79,19 @@ class Main {
         } else {
             this.mostrarBases();
         }
+    }
+
+    inicioRuta(nombre, iHora, fHora) {
+        divRuta.innerHTML = "";
+        if(this._rutaTotal.ejecutarRuta(nombre, iHora, fHora) == false) {
+            divRuta.innerHTML = "Base no encontrada";
+        } else {
+            this.mostrarRuta();
+        }
+    }
+
+    mostrarRuta() {
+        divRuta.innerHTML = this._rutaTotal.rutaString;
     }
 
 }
