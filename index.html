@@ -15,23 +15,38 @@
         <input type="text" id="nombre">
         <label>Minutos: </label>
         <input type="number" id="minutos">
-        <button type="button" id="btn">Agregar</button>
+        <button type="button" id="registrar">Registrar</button>
+
+        <label>Posicion:</label>
+        <input type="text" id="posicion">
+        <button id="insertar" type="button">Agregar</button>
+        <div id="estado"></div>
     </div>
     <div>
-        <h2>Buscar artículo</h2>
-        <input type="text" id="buscar" />
-        <button type="button" id="btnBuscar">Buscar</button>
-        <div id="consulta"></div>
+        <h2>Inicio de Ruta</h2>
+        <label>Nombre de base inicial</label>
+        <input type="text" id="inicioBase">
+        <label>hora de inicio</label>
+        <input type="time" id="inicioHora">
+        <label>hora final</label>
+        <input type="time" id="finalHora">
+        <button id="inicio" type="button">Iniciar</button>
+        <div id="mostrarRuta"></div>
     </div>
     <div>
-        <h2>Borrar artículo</h2>
-        <input type="text" id="borrar">
-        <button type="button" id="btnBorrar">Borrar</button>
+        <h2>Buscar base</h2>
+        <input type="text" id="nombreConsulta" />
+        <button type="button" id="consultar">Buscar</button>
+        <div id="mostrarConsulta"></div>
+    </div>
+    <div>
+        <h2>Borrar base</h2>
+        <input type="text" id="borrarNombre">
+        <button type="button" id="borrar">Borrar</button>
     </div>
     
     <div>
-        <label>Inventario</label>
-        <div id="inventario"></div>
+        <div id="mostrarBases"></div>
     </div>
 </body>
 <script src="main.js" type="module"></script>

@@ -8,6 +8,10 @@ export default class Ruta {
     get baseString() {
         return this._baseString;
     }
+    
+    get rutaString() {
+        return this._rutaString;
+    }
 
     agregarProducto(base) {
         if (this._inicio === null) {
@@ -71,6 +75,68 @@ export default class Ruta {
             inicio = inicio.siguiente;
         }
         return null;
+    }
+
+    borrarBase(nombre) {
+        if (this._inicio.nombre == nombre) {
+            if (this._inicio.siguiente == this._inicio) {
+                this._inicio = null;
+                this._tamaño--;
+            } else if (this._inicio != null) {
+                this._inicio.anterior.siguiente = this._inicio.siguiente;
+                this._inicio.siguiente.anterior = this._inicio.anterior;
+                this._inicio = this._inicio.siguiente;
+                this._tamaño--;
+            }
+        } else {
+            this.buscarBaseBorrar(nombre);
+        }
+    }
+
+    buscarBaseBorrar(nombre) {
+        let base = this.buscarBasesRegistradas(nombre, this._inicio.siguiente);
+        if (base == null) {
+            return;
+        } else {
+            base.siguiente.anterior = base.anterior;
+            base.anterior.siguiente = base.siguiente;
+            this._tamaño--;
+        }
+    }
+
+    agregarBaseEnPosicion(base, posicion) {
+        if (posicion <= (this._tamaño + 1) && (posicion > 0)) {
+            if (posicion == 1) {
+                if (this._inicio === null) {
+                    this.agregarProducto(base);
+                } else {
+                    this.insertarAntesInicio(base, this._inicio);
+                    this._inicio = this._inicio.anterior;
+                    this._tamaño++;
+                }
+            } else {
+                let productoAnterior = this.buscarPorProductoAnterior(posicion - 1, this._inicio);
+                console.log(productoAnterior);
+                base.siguiente = productoAnterior.siguiente;
+                base.anterior = productoAnterior;
+                productoAnterior.siguiente.anterior = base;
+                productoAnterior.siguiente = base;
+                this._tamaño++;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    buscarPorProductoAnterior(posicion, inicio) {
+        let i = 1;
+        do {
+            if (i == posicion) {
+                return inicio;
+            }
+            inicio = inicio.siguiente;
+            i++;
+        } while (inicio != this._inicio);
     }
 
 }
